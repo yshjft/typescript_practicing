@@ -4,8 +4,8 @@
 ### 타입스크리트에 익숙해지기 위해서 듣는 강의
         
 ### set up
-1 . npm install typescript
-2 . tsconfig.json 작성 : tsconfig.json 파일은 프로젝트를 컴파일하는 데 필요한 루트 파일과 컴파일러 옵션을 지정한다.(쉽게 말해 Typescript를 어떻게 JavaScript로 변환할지 설정한다)
+1. npm install typescript               
+2. tsconfig.json 작성 : tsconfig.json 파일은 프로젝트를 컴파일하는 데 필요한 루트 파일과 컴파일러 옵션을 지정한다.(쉽게 말해 Typescript를 어떻게 JavaScript로 변환할지 설정한다)
            
 ### tsconfig.json
 (compilerOption)           
