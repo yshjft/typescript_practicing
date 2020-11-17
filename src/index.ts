@@ -1,21 +1,27 @@
-interface Human {
-    name: string,
-    gender: string,
-    age: number
+class Human {
+    public name: string
+    private age: number
+    public gender: string
+    constructor(name:string, age:number, gender:string){
+        this.name=name
+        this.age=age
+        this.gender=gender
+    }
+    
+    getAge(){
+        return this.age
+    }
 }
 
-const person = {
-    name: 'hys',
-    age: 23,
-    gender: 'male',
-    
-}
+const lynn = new Human('hys', 23, 'male')
+
 
 const sayHi = (person: Human):string => {
-    const {name, age, gender} = person
+    const {name, gender} = person
+    const age = person.getAge()
     return `Hello ${name}, you are ${age}, you are a ${gender}`
 }
 
-console.log(sayHi(person))
+console.log(sayHi(lynn))
 
 export {};
