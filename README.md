@@ -24,4 +24,4 @@ ts 파일(index.ts)에 있는 코드를 컴파일해서 (index.js)랑 (index.js.
          
 ### node는 타입스크립트를 이해하지 못하기에 ts를 js로 컴파일하는 작업이 필요하다
            
-### outDir 컴파일된 모든 것들은 dist에서 생성
+### outDir 컴파일된 모든 것들은 dist에서 생성 
