@@ -1,4 +1,4 @@
-import { time } from "console"
+import * as CryptoJS from "crypto-js" //타입스크립트 import 방식
 
 class Block {
     public index:number
@@ -6,6 +6,9 @@ class Block {
     public previousHash: string
     public data: string
     public timestamp: number
+
+    // static이기 때문에 class가 생성되지 않아도 사용 가능하다
+    static calculateBlockHash = (index:number, previousHash:string, timestamp:number, data:string): string => CryptoJS.SHA256(index+previousHash+timestamp+data).toString();
 
     constructor(index:number, hash:string, previousHash:string, data:string, timestamp:number){
         this.index=index
@@ -20,7 +23,11 @@ const genesisBlock:Block = new Block(0, '20202020', '', 'Hello', 1234)
 
 let blockchain: [Block] = [genesisBlock];
 
-console.log(blockchain)
 
+const getBlockChain = () :Block[] => blockchain
+
+const getLatestBlock = ():Block => blockchain[blockchain.length-1]
+
+const getNewTimeStamp = ():number => Math.round(new Date().getTime() / 1000)
 
 export {};
