@@ -1,14 +1,21 @@
 import * as CryptoJS from "crypto-js" //타입스크립트 import 방식
 
 class Block {
+    // static이기 때문에 class가 생성되지 않아도 사용 가능하다
+    static calculateBlockHash = (index:number, previousHash:string, timestamp:number, data:string): string => CryptoJS.SHA256(index+previousHash+timestamp+data).toString();
+
+    static validateStructure = (aBlock:Block):boolean => 
+        typeof aBlock.index === 'number' && 
+        typeof aBlock.hash === 'string' && 
+        typeof aBlock.previousHash === 'string' &&
+        typeof aBlock.timestamp === 'number' &&
+        typeof aBlock.data === 'string'
+
     public index:number
     public hash:string
     public previousHash: string
     public data: string
     public timestamp: number
-
-    // static이기 때문에 class가 생성되지 않아도 사용 가능하다
-    static calculateBlockHash = (index:number, previousHash:string, timestamp:number, data:string): string => CryptoJS.SHA256(index+previousHash+timestamp+data).toString();
 
     constructor(index:number, hash:string, previousHash:string, data:string, timestamp:number){
         this.index=index
@@ -18,6 +25,8 @@ class Block {
         this.timestamp = timestamp
     }
 }
+
+
 
 const genesisBlock:Block = new Block(0, '20202020', '', 'Hello', 1234)
 
@@ -36,9 +45,37 @@ const createNewBlock = (data:string) : Block => {
     const newTimestamp:number = getNewTimeStamp()
     const newHash:string = Block.calculateBlockHash(newIndex, previousBlock.hash, newTimestamp, data)
     const newBlock : Block = new Block(newIndex, newHash, previousBlock.hash, data, newTimestamp)
+
+    addBlock(newBlock)
     return newBlock
 }
 
-console.log(createNewBlock("Hello"), createNewBlock("Bye Bye"))
+const getHashforBlock = (aBlock: Block) :string => Block.calculateBlockHash(aBlock.index, aBlock.previousHash, aBlock.timestamp, aBlock.data)
+
+const isBlockValid = (candidateBlock : Block, previousBlock: Block) : boolean => {
+    if(!Block.validateStructure(candidateBlock)){
+        return false
+    }else if(previousBlock.index+1 !== candidateBlock.index){
+        return false
+    }else if(previousBlock.hash !== candidateBlock.previousHash){
+        return false
+    }else if(getHashforBlock(candidateBlock) !== candidateBlock.hash){
+        return false
+    } else {
+        return true
+    }
+}
+
+const addBlock =(candidateBlock: Block):void => {
+    if(isBlockValid(candidateBlock, getLatestBlock())){
+        blockchain.push(candidateBlock)
+    }
+}
+
+createNewBlock('second block')
+createNewBlock('third block')
+createNewBlock('fourth block')
+
+console.log(blockchain)
 
 export {};
